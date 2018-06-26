@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">NASA fotka dnia:)</string>
+    <string name="nasa_image_title">wrzucona dnia:</string>
+    <string name="nasa_image_data">sobota 17 grudnia 2016</string>
+    <string name="nasa_image_description">Opis obrazka</string>
+</resources>
