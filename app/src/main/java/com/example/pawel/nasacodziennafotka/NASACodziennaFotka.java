@@ -4,12 +4,14 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 
-class NASACodziennaFotka extends AppCompatActivity
+
+public class NASACodziennaFotka extends AppCompatActivity
 {
 
     @Override
@@ -28,16 +30,17 @@ class NASACodziennaFotka extends AppCompatActivity
     public void resetDisplay(String tytulFotki, String dataFotki, Bitmap fotka, String opisFotki)
     {
 
-        TextView titleView = (TextView) findViewById(R.id.textView);
+
+        TextView titleView = findViewById(R.id.textView);
         titleView.setText(tytulFotki);
 
-        TextView dateView = (TextView) findViewById(R.id.textView3);
+        TextView dateView = findViewById(R.id.textView3);
         dateView.setText(dataFotki);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        ImageView imageView = findViewById(R.id.imageView);
         imageView.setImageBitmap(fotka);
 
-        TextView descriptionView = (TextView) findViewById(R.id.textView4);
+        TextView descriptionView = findViewById(R.id.textView4);
         descriptionView.setText(opisFotki);
     }
 
@@ -46,7 +49,7 @@ class NASACodziennaFotka extends AppCompatActivity
     {
         private IotdHandler iotdHandler;
 
-        public MojeZadanieWTle(IotdHandler iotdHandler)
+        private MojeZadanieWTle(IotdHandler iotdHandler)
         {
             this.iotdHandler = iotdHandler;
 

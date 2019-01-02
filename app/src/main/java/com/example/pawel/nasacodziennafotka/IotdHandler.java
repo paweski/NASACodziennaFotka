@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -34,8 +35,8 @@ public class IotdHandler extends DefaultHandler {
 
     private boolean inTitle = false;
     private boolean inDescription = false;
-    int descriptionNumber = 0; // iteruje po opisach wielu zdjęć umieszczonych na stronie
-    int bitmapNumber = 0; // iteruje po bitmapach zdjęć umieszczonych na stronie
+    private int descriptionNumber = 0; // iteruje po opisach wielu zdjęć umieszczonych na stronie
+    private int bitmapNumber = 0; // iteruje po bitmapach zdjęć umieszczonych na stronie
     private boolean inItem = false;
     private boolean inDate = false;
     private boolean inUrl = false;
@@ -48,23 +49,14 @@ public class IotdHandler extends DefaultHandler {
 
 
     public void startElement(String uri, String localName, String qName,
-                             Attributes attributes) throws SAXException
-    {
+                             Attributes attributes) {
         if (localName.startsWith("item"))
             {
                 inItem = true;
             }
         else if (inItem)
                 {
-                    if (localName.equals("title"))
-                        {
-                            inTitle = true;
-                        }
-
-                    else
-                        {
-                            inTitle = false;
-                        }
+                    inTitle = localName.equals("title");
 
                     if ( localName.startsWith("description") )
                         {
@@ -90,14 +82,7 @@ public class IotdHandler extends DefaultHandler {
                             inUrl = false;
                         }
 
-                     if (localName.equals("pubDate"))
-                        {
-                            inDate = true;
-                        }
-                    else
-                        {
-                            inDate = false;
-                        }
+                    inDate = localName.equals("pubDate");
                 }
     }
 
@@ -125,14 +110,13 @@ public class IotdHandler extends DefaultHandler {
 
         if (inDate && date == null)
             {
-                //Example: Tue, 21 Dec 2010 00:00:00 EST
-                String rawDate = chars;
+                //Example: Tue, 21 Dec 2010 00:00 EST
                 try
                     {
-                        SimpleDateFormat parseFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm");
-                        Date sourceDate = parseFormat.parse(rawDate);
+                        SimpleDateFormat parseFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm", Locale.US);
+                        Date sourceDate = parseFormat.parse(chars);
 
-                        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE, dd MMM yyyy");
+                        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE, dd MMM yyyy", Locale.US);
                         date = outputFormat.format(sourceDate);
                     } catch (Exception e)
                     {
@@ -142,14 +126,14 @@ public class IotdHandler extends DefaultHandler {
 
     }
 
-    public void processFeed( ) {
+    void processFeed( ) {
         try {
 
 
-            URL url = null;
+            URL url;
 
 
-            url = new URL("https://www.nasa.gov/rss/image_of_the_day.rss");
+            url = new URL("https://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss");
 
             SAXParserFactory spf = SAXParserFactory.newInstance();
             SAXParser sp = spf.newSAXParser();
@@ -157,17 +141,12 @@ public class IotdHandler extends DefaultHandler {
             xr.setContentHandler(this);
             xr.parse(new InputSource(url.openStream()));
 
-        } catch (IOException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, e.toString());
-        } catch (SAXException e) {
-            Log.e(TAG, e.toString());
-        } catch (ParserConfigurationException e) {
-            Log.e(TAG, e.toString());
-            
         }
     }
 
-    public Bitmap getBitmap(String bitmap_url)
+    private Bitmap getBitmap(String bitmap_url)
     {
         try
             {
@@ -185,14 +164,14 @@ public class IotdHandler extends DefaultHandler {
             }
     }
 
-    public String getTytulFotki() {return title; }
-    public String getOpisFotki() {
+    String getTytulFotki() {return title; }
+    String getOpisFotki() {
         return description.toString();
     }
-    public String getDateFotki() {
+    String getDateFotki() {
         return date;
     }
-    public Bitmap getObrazekFotki()
+    Bitmap getObrazekFotki()
     {
         return image;
     }
