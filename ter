@@ -1,0 +1,24 @@
+[33mcommit ded0a56bc8f32ce0341a19b48ba5af6523c4cd26[m[33m ([m[1;36mHEAD[m[33m)[m
+Merge: 085aa7e 4f2c8f3
+Author: paweski <pwesolow@gmail.com>
+Date:   Fri Apr 3 22:45:45 2020 +0200
+
+    Merge remote-tracking branch 'origin/master' into HEAD
+
+[33mcommit 085aa7edc51ab223487e48276076b81d11ac14a3[m[33m ([m[1;32mmaster[m[33m)[m
+Author: paweski <pwesolow@gmail.com>
+Date:   Thu Jan 3 00:01:03 2019 +0100
+
+    updated NASA url page and added Locale.US when formatting date
+
+[33mcommit 4f2c8f380496944dfcde8527f8f7b2cc0e9f2f40[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: paweski <40595933+paweski@users.noreply.github.com>
+Date:   Tue Jun 26 15:33:56 2018 +0200
+
+    short info added
+
+[33mcommit cbe78d8dff82d2bd36155cfea0a3202797f48cb7[m
+Author: paweski <pwesolow@gmail.com>
+Date:   Tue Jun 26 13:59:42 2018 +0200
+
+    Initial commit
